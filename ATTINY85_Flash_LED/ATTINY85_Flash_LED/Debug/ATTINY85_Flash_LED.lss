@@ -1,0 +1,150 @@
+
+ATTINY85_Flash_LED.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000032  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000000e0  2**0
+                  ALLOC, LOAD, DATA
+  2 .comment      0000002f  00000000  00000000  000000e0  2**0
+                  CONTENTS, READONLY
+  3 .stack.descriptors.hdr 0000000e  00000000  00000000  0000010f  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  0000011d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000749  00000000  00000000  0000013d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000004af  00000000  00000000  00000886  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001d8  00000000  00000000  00000d35  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00000f10  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000169  00000000  00000000  00000f34  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  0000109d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .text         00000002  00000062  00000062  000000d6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 12 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000010b0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .text.main    00000022  00000032  00000032  000000a6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .text.__dummy_fini 00000002  00000064  00000064  000000d8  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.__dummy_funcs_on_exit 00000002  00000066  00000066  000000da  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.__dummy_simulator_exit 00000002  00000068  00000068  000000dc  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .text.exit    0000000e  00000054  00000054  000000c8  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 18 .text._Exit   00000002  0000006a  0000006a  000000de  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	2f c0       	rjmp	.+94     	; 0x62 <__bad_interrupt>
+   4:	2e c0       	rjmp	.+92     	; 0x62 <__bad_interrupt>
+   6:	2d c0       	rjmp	.+90     	; 0x62 <__bad_interrupt>
+   8:	2c c0       	rjmp	.+88     	; 0x62 <__bad_interrupt>
+   a:	2b c0       	rjmp	.+86     	; 0x62 <__bad_interrupt>
+   c:	2a c0       	rjmp	.+84     	; 0x62 <__bad_interrupt>
+   e:	29 c0       	rjmp	.+82     	; 0x62 <__bad_interrupt>
+  10:	28 c0       	rjmp	.+80     	; 0x62 <__bad_interrupt>
+  12:	27 c0       	rjmp	.+78     	; 0x62 <__bad_interrupt>
+  14:	26 c0       	rjmp	.+76     	; 0x62 <__bad_interrupt>
+  16:	25 c0       	rjmp	.+74     	; 0x62 <__bad_interrupt>
+  18:	24 c0       	rjmp	.+72     	; 0x62 <__bad_interrupt>
+  1a:	23 c0       	rjmp	.+70     	; 0x62 <__bad_interrupt>
+  1c:	22 c0       	rjmp	.+68     	; 0x62 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+  2a:	03 d0       	rcall	.+6      	; 0x32 <_etext>
+  2c:	13 c0       	rjmp	.+38     	; 0x54 <exit>
+
+0000002e <_exit>:
+  2e:	f8 94       	cli
+
+00000030 <__stop_program>:
+  30:	ff cf       	rjmp	.-2      	; 0x30 <__stop_program>
+
+Disassembly of section .text:
+
+00000062 <__bad_interrupt>:
+  62:	ce cf       	rjmp	.-100    	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.main:
+
+00000032 <main>:
+#include <util/delay.h>
+
+int main(void)
+{
+	
+	DDRB |= (1 << DDB1); // Set direction register to HIGH in the 0th position (starts at 0th position) in order to set as output pin
+  32:	87 b3       	in	r24, 0x17	; 23
+  34:	82 60       	ori	r24, 0x02	; 2
+  36:	87 bb       	out	0x17, r24	; 23
+    while(1)
+    {
+		PORTB ^= (1 << PB1); // setting a 1 into this PINB variable will result in toggle action (see datasheet for why). 
+  38:	98 b3       	in	r25, 0x18	; 24
+  3a:	82 e0       	ldi	r24, 0x02	; 2
+  3c:	89 27       	eor	r24, r25
+  3e:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  40:	2f e9       	ldi	r18, 0x9F	; 159
+  42:	86 e8       	ldi	r24, 0x86	; 134
+  44:	91 e0       	ldi	r25, 0x01	; 1
+  46:	21 50       	subi	r18, 0x01	; 1
+  48:	80 40       	sbci	r24, 0x00	; 0
+  4a:	90 40       	sbci	r25, 0x00	; 0
+  4c:	e1 f7       	brne	.-8      	; 0x46 <__SREG__+0x7>
+  4e:	00 c0       	rjmp	.+0      	; 0x50 <__SREG__+0x11>
+  50:	00 00       	nop
+  52:	f2 cf       	rjmp	.-28     	; 0x38 <main+0x6>
+
+Disassembly of section .text.__dummy_fini:
+
+00000064 <_fini>:
+  64:	08 95       	ret
+
+Disassembly of section .text.__dummy_funcs_on_exit:
+
+00000066 <__funcs_on_exit>:
+  66:	08 95       	ret
+
+Disassembly of section .text.__dummy_simulator_exit:
+
+00000068 <__simulator_exit>:
+  68:	08 95       	ret
+
+Disassembly of section .text.exit:
+
+00000054 <exit>:
+  54:	ec 01       	movw	r28, r24
+  56:	07 d0       	rcall	.+14     	; 0x66 <__funcs_on_exit>
+  58:	05 d0       	rcall	.+10     	; 0x64 <_fini>
+  5a:	ce 01       	movw	r24, r28
+  5c:	05 d0       	rcall	.+10     	; 0x68 <__simulator_exit>
+  5e:	ce 01       	movw	r24, r28
+  60:	04 d0       	rcall	.+8      	; 0x6a <_Exit>
+
+Disassembly of section .text._Exit:
+
+0000006a <_Exit>:
+  6a:	e1 df       	rcall	.-62     	; 0x2e <_exit>
