@@ -1,0 +1,183 @@
+
+3_HardwareTimer_with_Interrupt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000032  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000104  2**0
+                  ALLOC, LOAD, DATA
+  2 .comment      0000002f  00000000  00000000  00000104  2**0
+                  CONTENTS, READONLY
+  3 .stack.descriptors.hdr 0000000e  00000000  00000000  00000133  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  00000141  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006c3  00000000  00000000  00000169  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000044b  00000000  00000000  0000082c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001c2  00000000  00000000  00000c77  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000048  00000000  00000000  00000e3c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000169  00000000  00000000  00000e84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000049  00000000  00000000  00000fed  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  00001036  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .text         00000002  00000086  00000086  000000fa  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 13 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001050  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .text.main    00000020  00000058  00000058  000000cc  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.__vector_10 00000026  00000032  00000032  000000a6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.__dummy_fini 00000002  00000088  00000088  000000fc  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .text.__dummy_funcs_on_exit 00000002  0000008a  0000008a  000000fe  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 18 .text.__dummy_simulator_exit 00000002  0000008c  0000008c  00000100  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 19 .text.exit    0000000e  00000078  00000078  000000ec  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 20 .text._Exit   00000002  0000008e  0000008e  00000102  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	41 c0       	rjmp	.+130    	; 0x86 <__bad_interrupt>
+   4:	40 c0       	rjmp	.+128    	; 0x86 <__bad_interrupt>
+   6:	3f c0       	rjmp	.+126    	; 0x86 <__bad_interrupt>
+   8:	3e c0       	rjmp	.+124    	; 0x86 <__bad_interrupt>
+   a:	3d c0       	rjmp	.+122    	; 0x86 <__bad_interrupt>
+   c:	3c c0       	rjmp	.+120    	; 0x86 <__bad_interrupt>
+   e:	3b c0       	rjmp	.+118    	; 0x86 <__bad_interrupt>
+  10:	3a c0       	rjmp	.+116    	; 0x86 <__bad_interrupt>
+  12:	39 c0       	rjmp	.+114    	; 0x86 <__bad_interrupt>
+  14:	0e c0       	rjmp	.+28     	; 0x32 <_etext>
+  16:	37 c0       	rjmp	.+110    	; 0x86 <__bad_interrupt>
+  18:	36 c0       	rjmp	.+108    	; 0x86 <__bad_interrupt>
+  1a:	35 c0       	rjmp	.+106    	; 0x86 <__bad_interrupt>
+  1c:	34 c0       	rjmp	.+104    	; 0x86 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+  2a:	16 d0       	rcall	.+44     	; 0x58 <main>
+  2c:	25 c0       	rjmp	.+74     	; 0x78 <exit>
+
+0000002e <_exit>:
+  2e:	f8 94       	cli
+
+00000030 <__stop_program>:
+  30:	ff cf       	rjmp	.-2      	; 0x30 <__stop_program>
+
+Disassembly of section .text:
+
+00000086 <__bad_interrupt>:
+  86:	bc cf       	rjmp	.-136    	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.main:
+
+00000058 <main>:
+
+#define F_CPU 1000000
+
+int main(void)
+{
+	DDRB = 0x01; // sets direction of pin0 to be an output....
+  58:	81 e0       	ldi	r24, 0x01	; 1
+  5a:	87 bb       	out	0x17, r24	; 23
+	PORTB &= 0xFE; // set the pin0 to LOW... becuase 0xFE is a mask of 0b11111110 which will only set the LSB to 0...
+  5c:	88 b3       	in	r24, 0x18	; 24
+  5e:	8e 7f       	andi	r24, 0xFE	; 254
+  60:	88 bb       	out	0x18, r24	; 24
+	
+	TCCR0A = 0x02; // put a 1 in bit position 1, which sets Mode 2 aka in the WGM01 bit which activates CTC Timer Mode. 
+  62:	82 e0       	ldi	r24, 0x02	; 2
+  64:	8a bd       	out	0x2a, r24	; 42
+	TCCR0B = 0x05; //0b0000 0101 put a 101 in bit positions 2,1,0 in order to scale clock by 1024... e.g. from 1Mhz to 977Hz. 
+  66:	85 e0       	ldi	r24, 0x05	; 5
+  68:	83 bf       	out	0x33, r24	; 51
+	OCR0A = 249; // count up 250 (0->249) clock periods before timer resets. As clock is 977Hz, each clock T is 1/977 = 1msec. Therefore timer counts for 250msec which should be human visible for a toggling LED...
+  6a:	89 ef       	ldi	r24, 0xF9	; 249
+  6c:	89 bd       	out	0x29, r24	; 41
+	TIMSK |= 0x10; // 0b00010000 this mask is used to set bit position 4 to HIGH. 
+  6e:	89 b7       	in	r24, 0x39	; 57
+  70:	80 61       	ori	r24, 0x10	; 16
+  72:	89 bf       	out	0x39, r24	; 57
+	sei(); // enable interrupt. 
+  74:	78 94       	sei
+  76:	ff cf       	rjmp	.-2      	; 0x76 <main+0x1e>
+
+Disassembly of section .text.__vector_10:
+
+00000032 <__vector_10>:
+    {
+        //TODO:: Please write your application code 
+    }
+}
+
+ISR(TIM0_COMPA_vect){
+  32:	1f 92       	push	r1
+  34:	0f 92       	push	r0
+  36:	0f b6       	in	r0, 0x3f	; 63
+  38:	0f 92       	push	r0
+  3a:	11 24       	eor	r1, r1
+  3c:	8f 93       	push	r24
+  3e:	9f 93       	push	r25
+	
+	PORTB ^= 1; // toggle the bit at 1st position in PORTB, which will switch the LED on and OFF using the hardware timer this time :)
+  40:	98 b3       	in	r25, 0x18	; 24
+  42:	81 e0       	ldi	r24, 0x01	; 1
+  44:	89 27       	eor	r24, r25
+  46:	88 bb       	out	0x18, r24	; 24
+	TCNT0 = 0; // 
+  48:	12 be       	out	0x32, r1	; 50
+  4a:	9f 91       	pop	r25
+  4c:	8f 91       	pop	r24
+  4e:	0f 90       	pop	r0
+  50:	0f be       	out	0x3f, r0	; 63
+  52:	0f 90       	pop	r0
+  54:	1f 90       	pop	r1
+  56:	18 95       	reti
+
+Disassembly of section .text.__dummy_fini:
+
+00000088 <_fini>:
+  88:	08 95       	ret
+
+Disassembly of section .text.__dummy_funcs_on_exit:
+
+0000008a <__funcs_on_exit>:
+  8a:	08 95       	ret
+
+Disassembly of section .text.__dummy_simulator_exit:
+
+0000008c <__simulator_exit>:
+  8c:	08 95       	ret
+
+Disassembly of section .text.exit:
+
+00000078 <exit>:
+  78:	ec 01       	movw	r28, r24
+  7a:	07 d0       	rcall	.+14     	; 0x8a <__funcs_on_exit>
+  7c:	05 d0       	rcall	.+10     	; 0x88 <_fini>
+  7e:	ce 01       	movw	r24, r28
+  80:	05 d0       	rcall	.+10     	; 0x8c <__simulator_exit>
+  82:	ce 01       	movw	r24, r28
+  84:	04 d0       	rcall	.+8      	; 0x8e <_Exit>
+
+Disassembly of section .text._Exit:
+
+0000008e <_Exit>:
+  8e:	cf df       	rcall	.-98     	; 0x2e <_exit>
