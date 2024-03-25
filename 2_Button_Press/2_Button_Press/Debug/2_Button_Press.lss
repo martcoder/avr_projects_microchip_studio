@@ -1,0 +1,177 @@
+
+2_Button_Press.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000032  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000000f4  2**0
+                  ALLOC, LOAD, DATA
+  2 .comment      0000002f  00000000  00000000  000000f4  2**0
+                  CONTENTS, READONLY
+  3 .stack.descriptors.hdr 0000000e  00000000  00000000  00000123  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000131  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000777  00000000  00000000  00000151  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000004d2  00000000  00000000  000008c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001f4  00000000  00000000  00000d9a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00000f90  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000169  00000000  00000000  00000fb4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000046  00000000  00000000  0000111d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00001163  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .text         00000002  00000076  00000076  000000ea  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 13 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001174  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .text.main    00000036  00000032  00000032  000000a6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.__dummy_fini 00000002  00000078  00000078  000000ec  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.__dummy_funcs_on_exit 00000002  0000007a  0000007a  000000ee  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .text.__dummy_simulator_exit 00000002  0000007c  0000007c  000000f0  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 18 .text.exit    0000000e  00000068  00000068  000000dc  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 19 .text._Exit   00000002  0000007e  0000007e  000000f2  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	39 c0       	rjmp	.+114    	; 0x76 <__bad_interrupt>
+   4:	38 c0       	rjmp	.+112    	; 0x76 <__bad_interrupt>
+   6:	37 c0       	rjmp	.+110    	; 0x76 <__bad_interrupt>
+   8:	36 c0       	rjmp	.+108    	; 0x76 <__bad_interrupt>
+   a:	35 c0       	rjmp	.+106    	; 0x76 <__bad_interrupt>
+   c:	34 c0       	rjmp	.+104    	; 0x76 <__bad_interrupt>
+   e:	33 c0       	rjmp	.+102    	; 0x76 <__bad_interrupt>
+  10:	32 c0       	rjmp	.+100    	; 0x76 <__bad_interrupt>
+  12:	31 c0       	rjmp	.+98     	; 0x76 <__bad_interrupt>
+  14:	30 c0       	rjmp	.+96     	; 0x76 <__bad_interrupt>
+  16:	2f c0       	rjmp	.+94     	; 0x76 <__bad_interrupt>
+  18:	2e c0       	rjmp	.+92     	; 0x76 <__bad_interrupt>
+  1a:	2d c0       	rjmp	.+90     	; 0x76 <__bad_interrupt>
+  1c:	2c c0       	rjmp	.+88     	; 0x76 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+  2a:	03 d0       	rcall	.+6      	; 0x32 <_etext>
+  2c:	1d c0       	rjmp	.+58     	; 0x68 <exit>
+
+0000002e <_exit>:
+  2e:	f8 94       	cli
+
+00000030 <__stop_program>:
+  30:	ff cf       	rjmp	.-2      	; 0x30 <__stop_program>
+
+Disassembly of section .text:
+
+00000076 <__bad_interrupt>:
+  76:	c4 cf       	rjmp	.-120    	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.main:
+
+00000032 <main>:
+#include <util/delay.h>
+
+int main(void)
+{
+	
+	DDRB = 0x02; // 0b00000010 so basically settting bit0 to be input (for button), and bit1 to be output (for LED)
+  32:	82 e0       	ldi	r24, 0x02	; 2
+  34:	87 bb       	out	0x17, r24	; 23
+	PORTB = 0x01; // 0b00000001 so this is setting LED to LOW initially, and pulling the button input up to HIGH initially...
+  36:	81 e0       	ldi	r24, 0x01	; 1
+  38:	88 bb       	out	0x18, r24	; 24
+    while(1)
+    {
+        //TODO:: Please write your application code 
+		// basically check if button/switched has been pressed, if so PINB will be pulled to GND aka 0, and the AND op will return 0, therefore
+		// ... if statement condition will be TRUE...
+		if( (PINB & (1 << PINB0)) == 0 ){ //this code is so funny, 1 << PINB0 is 1 << 0, which is just 1, or 0b00000001
+  3a:	b0 99       	sbic	0x16, 0	; 22
+  3c:	04 c0       	rjmp	.+8      	; 0x46 <__SREG__+0x7>
+			//if TRUE aka BUTTON/SWITCH has been pressed
+			// Switch the LED on....
+			PORTB |= (1 << PB1); // this is also funny, 1 << 1 which becomes 0b00000010, basically sets bit position 1 HIGH which is the LED output pin
+  3e:	88 b3       	in	r24, 0x18	; 24
+  40:	82 60       	ori	r24, 0x02	; 2
+  42:	88 bb       	out	0x18, r24	; 24
+  44:	fa cf       	rjmp	.-12     	; 0x3a <main+0x8>
+			_delay_ms(50);
+			*/
+			
+			//THE FOLLOWING CODE RESULTS IN A DIMLY LIT LED AND THE FLASHING IS NOT DISCERNIBLE!!! 
+			//Here it's OFF for 9ms then ON for only 0.2ms, so should be fairly dim....
+			PORTB &= ~(1 << PB1);
+  46:	88 b3       	in	r24, 0x18	; 24
+  48:	8d 7f       	andi	r24, 0xFD	; 253
+  4a:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  4c:	89 ec       	ldi	r24, 0xC9	; 201
+  4e:	98 e0       	ldi	r25, 0x08	; 8
+  50:	01 97       	sbiw	r24, 0x01	; 1
+  52:	f1 f7       	brne	.-4      	; 0x50 <__SREG__+0x11>
+  54:	00 c0       	rjmp	.+0      	; 0x56 <__SREG__+0x17>
+  56:	00 00       	nop
+			_delay_ms(9);
+			PORTB |= (1 << PB1);
+  58:	88 b3       	in	r24, 0x18	; 24
+  5a:	82 60       	ori	r24, 0x02	; 2
+  5c:	88 bb       	out	0x18, r24	; 24
+  5e:	92 e4       	ldi	r25, 0x42	; 66
+  60:	9a 95       	dec	r25
+  62:	f1 f7       	brne	.-4      	; 0x60 <__SREG__+0x21>
+  64:	00 c0       	rjmp	.+0      	; 0x66 <__SREG__+0x27>
+  66:	e9 cf       	rjmp	.-46     	; 0x3a <main+0x8>
+
+Disassembly of section .text.__dummy_fini:
+
+00000078 <_fini>:
+  78:	08 95       	ret
+
+Disassembly of section .text.__dummy_funcs_on_exit:
+
+0000007a <__funcs_on_exit>:
+  7a:	08 95       	ret
+
+Disassembly of section .text.__dummy_simulator_exit:
+
+0000007c <__simulator_exit>:
+  7c:	08 95       	ret
+
+Disassembly of section .text.exit:
+
+00000068 <exit>:
+  68:	ec 01       	movw	r28, r24
+  6a:	07 d0       	rcall	.+14     	; 0x7a <__funcs_on_exit>
+  6c:	05 d0       	rcall	.+10     	; 0x78 <_fini>
+  6e:	ce 01       	movw	r24, r28
+  70:	05 d0       	rcall	.+10     	; 0x7c <__simulator_exit>
+  72:	ce 01       	movw	r24, r28
+  74:	04 d0       	rcall	.+8      	; 0x7e <_Exit>
+
+Disassembly of section .text._Exit:
+
+0000007e <_Exit>:
+  7e:	d7 df       	rcall	.-82     	; 0x2e <_exit>
