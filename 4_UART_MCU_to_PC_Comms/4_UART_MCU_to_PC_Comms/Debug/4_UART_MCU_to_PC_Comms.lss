@@ -1,0 +1,313 @@
+
+4_UART_MCU_to_PC_Comms.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000074  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001d6  2**0
+                  ALLOC, LOAD, DATA
+  2 .comment      0000002f  00000000  00000000  000001d6  2**0
+                  CONTENTS, READONLY
+  3 .stack.descriptors.hdr 0000000e  00000000  00000000  00000205  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  00000213  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000811  00000000  00000000  0000024b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000544  00000000  00000000  00000a5c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000026e  00000000  00000000  00000fa0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000068  00000000  00000000  00001210  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000169  00000000  00000000  00001278  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000006a  00000000  00000000  000013e1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  0000144b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .text         00000002  00000138  00000138  000001cc  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 13 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001474  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .text.timer_init 00000012  00000118  00000118  000001ac  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.send_to_uart 00000026  000000ce  000000ce  00000162  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.main    00000024  000000f4  000000f4  00000188  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .text.__vector_10 0000005a  00000074  00000074  00000108  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 18 .bss.uartData 00000002  00800060  00800060  000001d6  2**0
+                  ALLOC
+ 19 .text.__dummy_fini 00000002  0000013a  0000013a  000001ce  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 20 .text.__dummy_funcs_on_exit 00000002  0000013c  0000013c  000001d0  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 21 .text.__dummy_simulator_exit 00000002  0000013e  0000013e  000001d2  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 22 .text.exit    0000000e  0000012a  0000012a  000001be  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 23 .text._Exit   00000002  00000140  00000140  000001d4  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	11 c0       	rjmp	.+34     	; 0x24 <__ctors_end>
+   2:	9a c0       	rjmp	.+308    	; 0x138 <__bad_interrupt>
+   4:	99 c0       	rjmp	.+306    	; 0x138 <__bad_interrupt>
+   6:	98 c0       	rjmp	.+304    	; 0x138 <__bad_interrupt>
+   8:	97 c0       	rjmp	.+302    	; 0x138 <__bad_interrupt>
+   a:	96 c0       	rjmp	.+300    	; 0x138 <__bad_interrupt>
+   c:	95 c0       	rjmp	.+298    	; 0x138 <__bad_interrupt>
+   e:	94 c0       	rjmp	.+296    	; 0x138 <__bad_interrupt>
+  10:	93 c0       	rjmp	.+294    	; 0x138 <__bad_interrupt>
+  12:	92 c0       	rjmp	.+292    	; 0x138 <__bad_interrupt>
+  14:	2f c0       	rjmp	.+94     	; 0x74 <_etext>
+  16:	90 c0       	rjmp	.+288    	; 0x138 <__bad_interrupt>
+  18:	8f c0       	rjmp	.+286    	; 0x138 <__bad_interrupt>
+  1a:	8e c0       	rjmp	.+284    	; 0x138 <__bad_interrupt>
+  1c:	8d c0       	rjmp	.+282    	; 0x138 <__bad_interrupt>
+
+0000001e <.dinit>:
+  1e:	00 60       	ori	r16, 0x00	; 0
+  20:	00 62       	ori	r16, 0x20	; 32
+  22:	80 00       	.word	0x0080	; ????
+
+00000024 <__ctors_end>:
+  24:	11 24       	eor	r1, r1
+  26:	1f be       	out	0x3f, r1	; 63
+  28:	cf e5       	ldi	r28, 0x5F	; 95
+  2a:	d2 e0       	ldi	r29, 0x02	; 2
+  2c:	de bf       	out	0x3e, r29	; 62
+  2e:	cd bf       	out	0x3d, r28	; 61
+
+00000030 <__do_copy_data>:
+  30:	ee e1       	ldi	r30, 0x1E	; 30
+  32:	f0 e0       	ldi	r31, 0x00	; 0
+  34:	40 e0       	ldi	r20, 0x00	; 0
+  36:	17 c0       	rjmp	.+46     	; 0x66 <__do_clear_bss+0x8>
+  38:	b5 91       	lpm	r27, Z+
+  3a:	a5 91       	lpm	r26, Z+
+  3c:	35 91       	lpm	r19, Z+
+  3e:	25 91       	lpm	r18, Z+
+  40:	05 91       	lpm	r16, Z+
+  42:	07 fd       	sbrc	r16, 7
+  44:	0c c0       	rjmp	.+24     	; 0x5e <__do_clear_bss>
+  46:	95 91       	lpm	r25, Z+
+  48:	85 91       	lpm	r24, Z+
+  4a:	ef 01       	movw	r28, r30
+  4c:	f9 2f       	mov	r31, r25
+  4e:	e8 2f       	mov	r30, r24
+  50:	05 90       	lpm	r0, Z+
+  52:	0d 92       	st	X+, r0
+  54:	a2 17       	cp	r26, r18
+  56:	b3 07       	cpc	r27, r19
+  58:	d9 f7       	brne	.-10     	; 0x50 <__SREG__+0x11>
+  5a:	fe 01       	movw	r30, r28
+  5c:	04 c0       	rjmp	.+8      	; 0x66 <__do_clear_bss+0x8>
+
+0000005e <__do_clear_bss>:
+  5e:	1d 92       	st	X+, r1
+  60:	a2 17       	cp	r26, r18
+  62:	b3 07       	cpc	r27, r19
+  64:	e1 f7       	brne	.-8      	; 0x5e <__do_clear_bss>
+  66:	e3 32       	cpi	r30, 0x23	; 35
+  68:	f4 07       	cpc	r31, r20
+  6a:	31 f7       	brne	.-52     	; 0x38 <__do_copy_data+0x8>
+  6c:	43 d0       	rcall	.+134    	; 0xf4 <main>
+  6e:	5d c0       	rjmp	.+186    	; 0x12a <exit>
+
+00000070 <_exit>:
+  70:	f8 94       	cli
+
+00000072 <__stop_program>:
+  72:	ff cf       	rjmp	.-2      	; 0x72 <__stop_program>
+
+Disassembly of section .text:
+
+00000138 <__bad_interrupt>:
+ 138:	63 cf       	rjmp	.-314    	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.timer_init:
+
+00000118 <timer_init>:
+#define F_CPU 1000000
+
+#include <util/delay.h>
+
+void timer_init(){
+	TCCR0A = 0x02; // put a 1 in bit position 1, which sets Mode 2 aka in the WGM01 bit which activates CTC Timer Mode.
+ 118:	82 e0       	ldi	r24, 0x02	; 2
+ 11a:	8a bd       	out	0x2a, r24	; 42
+	// DONT PRESCALE, JUST USE SYSTEM CLOCK SPEED //TCCR0B = 0x05; //0b0000 0101 put a 101 in bit positions 2,1,0 in order to scale clock by 1024... e.g. from 1Mhz to 977Hz.
+	//... NB TCCR0B will need at least the 0th position bit setting in order for TIMER to start, but this is done here in send_to_uart function. 
+	OCR0A = 249; //103; // count up 104 (0->103) clock periods in order to achieve baud rate of 9600 Hz (as 1M / 9600 = 104). 
+ 11c:	89 ef       	ldi	r24, 0xF9	; 249
+ 11e:	89 bd       	out	0x29, r24	; 41
+	TIMSK |= 0x10; // 0b00010000 this mask is used to set bit position 4 to HIGH, which is for OCIE0A as we want Timer Compare Match A
+ 120:	89 b7       	in	r24, 0x39	; 57
+ 122:	80 61       	ori	r24, 0x10	; 16
+ 124:	89 bf       	out	0x39, r24	; 57
+	sei(); // enable interrupt.
+ 126:	78 94       	sei
+ 128:	08 95       	ret
+
+Disassembly of section .text.send_to_uart:
+
+000000ce <send_to_uart>:
+volatile uint16_t uartData = 0; 
+
+
+void send_to_uart(char c){
+	
+	uartData = c << 1; // shift char to left in order to put a 0 in the 0th bit position, indicating a UART start BIT 
+  ce:	90 e0       	ldi	r25, 0x00	; 0
+  d0:	88 0f       	add	r24, r24
+  d2:	99 1f       	adc	r25, r25
+  d4:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  d8:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	uartData |= 1 << 9; // write a 1 into the 9th position to indicate a UART stop BIT. 
+  dc:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  e0:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  e4:	92 60       	ori	r25, 0x02	; 2
+  e6:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  ea:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	// Now start the timer that is used to achieve the baud rate of 9600
+	TCCR0B = 1 << 0; // simply a 1 in 0th bit position will activate timer with no scaling. 
+  ee:	81 e0       	ldi	r24, 0x01	; 1
+  f0:	83 bf       	out	0x33, r24	; 51
+  f2:	08 95       	ret
+
+Disassembly of section .text.main:
+
+000000f4 <main>:
+}
+
+int main(void)
+{
+	DDRB = 0x01; // sets direction of pin0 to be an output....
+  f4:	81 e0       	ldi	r24, 0x01	; 1
+  f6:	87 bb       	out	0x17, r24	; 23
+	PORTB |= 1 << PB0; // start the pin0 at HIGH becuase UART signals that data needs sending with a HIGH to LOW transition, therefore need HIGH to begin with
+  f8:	88 b3       	in	r24, 0x18	; 24
+  fa:	81 60       	ori	r24, 0x01	; 1
+  fc:	88 bb       	out	0x18, r24	; 24
+	timer_init();
+  fe:	0c d0       	rcall	.+24     	; 0x118 <timer_init>
+	
+	while(1)
+	{
+		send_to_uart('Z');
+ 100:	8a e5       	ldi	r24, 0x5A	; 90
+ 102:	e5 df       	rcall	.-54     	; 0xce <send_to_uart>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 104:	2f e3       	ldi	r18, 0x3F	; 63
+ 106:	8d e0       	ldi	r24, 0x0D	; 13
+ 108:	93 e0       	ldi	r25, 0x03	; 3
+ 10a:	21 50       	subi	r18, 0x01	; 1
+ 10c:	80 40       	sbci	r24, 0x00	; 0
+ 10e:	90 40       	sbci	r25, 0x00	; 0
+ 110:	e1 f7       	brne	.-8      	; 0x10a <main+0x16>
+ 112:	00 c0       	rjmp	.+0      	; 0x114 <main+0x20>
+ 114:	00 00       	nop
+ 116:	f4 cf       	rjmp	.-24     	; 0x100 <main+0xc>
+
+Disassembly of section .text.__vector_10:
+
+00000074 <__vector_10>:
+		_delay_ms(1000);
+	}
+}
+
+ISR(TIM0_COMPA_vect){
+  74:	1f 92       	push	r1
+  76:	0f 92       	push	r0
+  78:	0f b6       	in	r0, 0x3f	; 63
+  7a:	0f 92       	push	r0
+  7c:	11 24       	eor	r1, r1
+  7e:	8f 93       	push	r24
+  80:	9f 93       	push	r25
+	
+	if(uartData & 0x01){ // if LSB of uartData is a 1, set the output pin to 1 to match it, thereby sending that value as output
+  82:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  86:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  8a:	80 ff       	sbrs	r24, 0
+  8c:	04 c0       	rjmp	.+8      	; 0x96 <__vector_10+0x22>
+		PORTB |= 1 << PB0;
+  8e:	88 b3       	in	r24, 0x18	; 24
+  90:	81 60       	ori	r24, 0x01	; 1
+  92:	88 bb       	out	0x18, r24	; 24
+  94:	03 c0       	rjmp	.+6      	; 0x9c <__vector_10+0x28>
+	}
+	else{ // if LSB of uartData is a 0, also set the output pin to this value, but this time the value is a 0
+		PORTB &= ~(1 << PB0);
+  96:	88 b3       	in	r24, 0x18	; 24
+  98:	8e 7f       	andi	r24, 0xFE	; 254
+  9a:	88 bb       	out	0x18, r24	; 24
+	}
+	
+	uartData = uartData >> 1; // shift all the values along so the LSB drops off the end... ready for processing the next BIT...
+  9c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  a0:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  a4:	96 95       	lsr	r25
+  a6:	87 95       	ror	r24
+  a8:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  ac:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	
+	if(uartData == 0){ // if uartData has all been processed and shifted off the end into oblivion, then it is done. 
+  b0:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  b4:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  b8:	89 2b       	or	r24, r25
+  ba:	11 f4       	brne	.+4      	; 0xc0 <__vector_10+0x4c>
+		
+		TCNT0 = 0; // reset the counter
+  bc:	12 be       	out	0x32, r1	; 50
+		TCCR0B = 0; // stops the timer, as no longer need to achieve  baud rate as the data has now finished being sent. 
+  be:	13 be       	out	0x33, r1	; 51
+	}
+  c0:	9f 91       	pop	r25
+  c2:	8f 91       	pop	r24
+  c4:	0f 90       	pop	r0
+  c6:	0f be       	out	0x3f, r0	; 63
+  c8:	0f 90       	pop	r0
+  ca:	1f 90       	pop	r1
+  cc:	18 95       	reti
+
+Disassembly of section .text.__dummy_fini:
+
+0000013a <_fini>:
+ 13a:	08 95       	ret
+
+Disassembly of section .text.__dummy_funcs_on_exit:
+
+0000013c <__funcs_on_exit>:
+ 13c:	08 95       	ret
+
+Disassembly of section .text.__dummy_simulator_exit:
+
+0000013e <__simulator_exit>:
+ 13e:	08 95       	ret
+
+Disassembly of section .text.exit:
+
+0000012a <exit>:
+ 12a:	ec 01       	movw	r28, r24
+ 12c:	07 d0       	rcall	.+14     	; 0x13c <__funcs_on_exit>
+ 12e:	05 d0       	rcall	.+10     	; 0x13a <_fini>
+ 130:	ce 01       	movw	r24, r28
+ 132:	05 d0       	rcall	.+10     	; 0x13e <__simulator_exit>
+ 134:	ce 01       	movw	r24, r28
+ 136:	04 d0       	rcall	.+8      	; 0x140 <_Exit>
+
+Disassembly of section .text._Exit:
+
+00000140 <_Exit>:
+ 140:	97 df       	rcall	.-210    	; 0x70 <_exit>

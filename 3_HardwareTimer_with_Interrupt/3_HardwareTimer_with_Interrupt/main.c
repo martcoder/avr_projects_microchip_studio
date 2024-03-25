@@ -18,7 +18,7 @@ int main(void)
 	TCCR0A = 0x02; // put a 1 in bit position 1, which sets Mode 2 aka in the WGM01 bit which activates CTC Timer Mode. 
 	TCCR0B = 0x05; //0b0000 0101 put a 101 in bit positions 2,1,0 in order to scale clock by 1024... e.g. from 1Mhz to 977Hz. 
 	OCR0A = 249; // count up 250 (0->249) clock periods before timer resets. As clock is 977Hz, each clock T is 1/977 = 1msec. Therefore timer counts for 250msec which should be human visible for a toggling LED...
-	TIMSK |= 0x10; // 0b00010000 this mask is used to set bit position 4 to HIGH. 
+	TIMSK |= 0x10; // 0b00010000 this mask is used to set bit position 4 to HIGH, corresponding with OCIE0A which is Counter Match A
 	sei(); // enable interrupt. 
 	
 	
@@ -31,5 +31,5 @@ int main(void)
 ISR(TIM0_COMPA_vect){
 	
 	PORTB ^= 1; // toggle the bit at 1st position in PORTB, which will switch the LED on and OFF using the hardware timer this time :)
-	TCNT0 = 0; // 
+	TCNT0 = 0; // reset timer
 }
