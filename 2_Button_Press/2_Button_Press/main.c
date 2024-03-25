@@ -41,7 +41,7 @@ int main(void)
 			PORTB &= ~(1 << PB1);
 			_delay_ms(9);
 			PORTB |= (1 << PB1);
-			_delay_ms(0.2);
+			_delay_us(200);
 		}
     }
 }

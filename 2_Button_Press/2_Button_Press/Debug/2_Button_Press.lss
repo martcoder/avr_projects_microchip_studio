@@ -13,23 +13,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .debug_aranges 00000020  00000000  00000000  00000131  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000777  00000000  00000000  00000151  2**0
+  5 .debug_info   0000079e  00000000  00000000  00000151  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000004d2  00000000  00000000  000008c8  2**0
+  6 .debug_abbrev 0000050a  00000000  00000000  000008ef  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000001f4  00000000  00000000  00000d9a  2**0
+  7 .debug_line   000001f4  00000000  00000000  00000df9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  00000f90  2**2
+  8 .debug_frame  00000024  00000000  00000000  00000ff0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000169  00000000  00000000  00000fb4  2**0
+  9 .debug_str    0000018f  00000000  00000000  00001014  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000046  00000000  00000000  0000111d  2**0
+ 10 .debug_loc    00000046  00000000  00000000  000011a3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001163  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  000011e9  2**0
                   CONTENTS, READONLY, DEBUGGING
  12 .text         00000002  00000076  00000076  000000ea  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 13 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001174  2**2
+ 13 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000011fc  2**2
                   CONTENTS, READONLY, DEBUGGING
  14 .text.main    00000036  00000032  00000032  000000a6  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
@@ -139,6 +139,12 @@ int main(void)
   58:	88 b3       	in	r24, 0x18	; 24
   5a:	82 60       	ori	r24, 0x02	; 2
   5c:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
   5e:	92 e4       	ldi	r25, 0x42	; 66
   60:	9a 95       	dec	r25
   62:	f1 f7       	brne	.-4      	; 0x60 <__SREG__+0x21>
